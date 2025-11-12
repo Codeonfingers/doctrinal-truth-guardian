@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Shield } from "lucide-react";
 import { FileUpload } from "@/components/FileUpload";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -12,6 +13,21 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <header className="border-b bg-card">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Shield className="w-6 h-6 text-primary" />
+            <span className="text-xl font-bold">DoctrineShield™</span>
+          </div>
+          <nav className="flex items-center space-x-2">
+            <Button variant="ghost" onClick={() => navigate("/about")}>About</Button>
+            <Button variant="ghost" onClick={() => navigate("/contact")}>Contact</Button>
+            <Button onClick={() => navigate("/auth")}>Sign In</Button>
+          </nav>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-hero text-white">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:32px_32px]" />
