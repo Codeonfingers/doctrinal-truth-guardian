@@ -8,7 +8,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   const handleFileSelect = (file: File) => {
-    navigate("/dashboard", { state: { fileName: file.name } });
+    navigate("/chat");
   };
 
   return (
@@ -21,6 +21,7 @@ const Index = () => {
             <span className="text-xl font-bold">DoctrineShield™</span>
           </div>
           <nav className="flex items-center space-x-2">
+            <Button variant="ghost" onClick={() => navigate("/chat")}>Launch App</Button>
             <Button variant="ghost" onClick={() => navigate("/about")}>About</Button>
             <Button variant="ghost" onClick={() => navigate("/contact")}>Contact</Button>
             <Button onClick={() => navigate("/auth")}>Sign In</Button>
