@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Shield } from "lucide-react";
 import { FileUpload } from "@/components/FileUpload";
-import { Button } from "@/components/ui/button";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -12,27 +12,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Shield className="w-6 h-6 text-primary" />
-            <span className="text-xl font-bold">DoctrineShield™</span>
-          </div>
-          <nav className="flex items-center space-x-2">
-            <Button variant="ghost" onClick={() => navigate("/chat")}>Launch App</Button>
-            <Button variant="ghost" onClick={() => navigate("/about")}>About</Button>
-            <Button variant="ghost" onClick={() => navigate("/contact")}>Contact</Button>
-            <Button onClick={() => navigate("/auth")}>Sign In</Button>
-          </nav>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
+      <Header />
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-hero text-white">
+      <div className="relative w-full overflow-hidden bg-gradient-hero text-white">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:32px_32px]" />
-        <div className="container relative mx-auto px-4 py-16 md:py-24">
+        <div className="container relative mx-auto max-w-screen-xl px-4 py-16 md:py-24">
           <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto animate-fade-in">
             <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-glow">
               <Shield className="w-10 h-10" />
@@ -52,8 +38,9 @@ const Index = () => {
       </div>
 
       {/* Upload Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto space-y-8 animate-slide-up">
+      <div className="flex-1 w-full">
+        <div className="container mx-auto max-w-screen-xl px-4 py-16">
+          <div className="max-w-4xl mx-auto space-y-8 animate-slide-up">
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-bold">Upload for Analysis</h2>
             <p className="text-muted-foreground">
@@ -92,9 +79,12 @@ const Index = () => {
                 Detect manipulative rhetoric including fear, pride, or flattery tactics
               </p>
             </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

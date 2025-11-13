@@ -13,15 +13,17 @@ export function ChatSidebar({ collapsed, onToggle, onNewChat }: ChatSidebarProps
   return (
     <aside
       className={cn(
-        "relative h-screen bg-sidebar-background border-r border-sidebar-border transition-all duration-300 flex flex-col",
-        collapsed ? "w-14" : "w-64"
+        "relative h-screen bg-sidebar-background border-r border-sidebar-border/40 transition-all duration-300 flex flex-col",
+        collapsed ? "w-16" : "w-64"
       )}
     >
       {/* Header */}
-      <div className="p-3 border-b border-sidebar-border flex items-center justify-between">
+      <div className="p-3 border-b border-sidebar-border/40 flex items-center justify-between">
         {!collapsed && (
           <div className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-primary" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+              <Shield className="w-4 h-4 text-primary" />
+            </div>
             <span className="font-bold text-sm">DoctrineShield</span>
           </div>
         )}
@@ -70,7 +72,7 @@ export function ChatSidebar({ collapsed, onToggle, onNewChat }: ChatSidebarProps
       )}
 
       {/* Settings */}
-      <div className="p-3 border-t border-sidebar-border">
+      <div className="p-3 border-t border-sidebar-border/40">
         <Button
           variant="ghost"
           className="w-full justify-start gap-2"
