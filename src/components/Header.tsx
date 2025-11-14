@@ -9,47 +9,41 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: "Launch App", path: "/chat" },
-    { label: "About", path: "/about" },
-    { label: "Contact", path: "/contact" },
+    { label: "Dashboard", path: "/dashboard" },
+    { label: "Analyzer", path: "/chat" },
+    { label: "Pricing", path: "/pricing" },
   ];
 
   return (
     <>
       {/* Fixed Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4">
+      <header className="w-full bg-background border-b border-border/10">
+        <div className="container mx-auto flex h-20 max-w-screen-xl items-center justify-between px-6">
           {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <Shield className="h-5 w-5 text-primary" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+              <Shield className="h-5 w-5 text-white" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-bold leading-tight">DoctrineShield™</span>
-              <span className="text-[10px] text-muted-foreground leading-tight">Guarding Truth</span>
-            </div>
+            <span className="text-xl font-semibold text-foreground">DoctrineShield</span>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-2">
+          <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <Button
+              <button
                 key={item.path}
-                variant="ghost"
-                size="sm"
                 onClick={() => navigate(item.path)}
-                className="text-sm font-medium transition-colors hover:text-primary"
+                className="text-base font-medium text-primary hover:text-primary/80 transition-colors"
               >
                 {item.label}
-              </Button>
+              </button>
             ))}
-            <Button
-              size="sm"
+            <button
               onClick={() => navigate("/auth")}
-              className="ml-2"
+              className="text-base font-medium text-primary hover:text-primary/80 transition-colors"
             >
               Sign In
-            </Button>
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
