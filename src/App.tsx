@@ -11,6 +11,10 @@ import Auth from "./pages/Auth";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Pricing from "./pages/Pricing";
+import DatasetScreening from "./pages/DatasetScreening";
+import Reports from "./pages/Reports";
+import ModelManagement from "./pages/ModelManagement";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +29,10 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dataset-screening" element={<DatasetScreening />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/model-management" element={<ModelManagement />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/report" element={<Report />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/about" element={<About />} />
