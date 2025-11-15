@@ -10,6 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface DashboardTopBarProps {
   title: string;
@@ -18,6 +20,27 @@ interface DashboardTopBarProps {
 
 export function DashboardTopBar({ title, onMobileMenuToggle }: DashboardTopBarProps) {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      toast({
+        title: "Logged out successfully",
+        description: "You have been signed out of your account.",
+      });
+      
+      navigate("/");
+    } catch (error) {
+      toast({
+        title: "Error logging out",
+        description: "There was a problem signing you out. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
@@ -73,7 +96,7 @@ export function DashboardTopBar({ title, onMobileMenuToggle }: DashboardTopBarPr
             </DropdownMenuItem>
             <DropdownMenuItem>Preferences</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">
+            <DropdownMenuItem onClick={handleLogout} className="text-destructive cursor-pointer">
               Log Out
             </DropdownMenuItem>
           </DropdownMenuContent>
