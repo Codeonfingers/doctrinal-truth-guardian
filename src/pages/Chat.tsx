@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { ChatSidebar } from "@/components/ChatSidebar";
+import { Layout } from "@/components/Layout";
 import { ChatMessage, ChatMessageProps, AnalysisResult } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { VerdictType } from "@/components/VerdictBadge";
-import { Shield } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Chat() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessageProps[]>([
     {
       role: "assistant",
@@ -26,15 +28,6 @@ export default function Chat() {
       }
     }
   }, [messages]);
-
-  const handleNewChat = () => {
-    setMessages([
-      {
-        role: "assistant",
-        content: "Starting a new analysis session. How can I help you discern theological truth today?",
-      },
-    ]);
-  };
 
   const handleSendMessage = (message: string) => {
     // Add user message
@@ -104,6 +97,12 @@ export default function Chat() {
                 severity: "high" as const,
                 quote: "All paths lead to the same divine truth...",
               },
+              {
+                section: "Page 6, Paragraph 1",
+                flag: "Salvation through works",
+                severity: "high" as const,
+                quote: "Through your good deeds and moral living, you can earn your way to heaven...",
+              },
             ];
 
       const analysisResult: AnalysisResult = {
@@ -126,37 +125,40 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
-      <ChatSidebar
-        collapsed={sidebarCollapsed}
-        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
-        onNewChat={handleNewChat}
-      />
+    <Layout title="Analyzer" hideFooter>
+      <div className="flex flex-col h-full">
+        {/* Back to Dashboard Link */}
+        <div className="border-b border-border bg-card px-4 py-3 md:px-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/dashboard")}
+            className="gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="hidden sm:inline">Back to Dashboard</span>
+            <span className="sm:hidden">Back</span>
+          </Button>
+        </div>
 
-      <div className="flex-1 flex flex-col h-screen">
-        {/* Header */}
-        <header className="border-b bg-card px-4 py-3 flex items-center gap-2">
-          <Shield className="w-5 h-5 text-primary" />
-          <h1 className="font-semibold">DoctrineShield™</h1>
-          <span className="text-xs text-muted-foreground">Beta</span>
-        </header>
-
-        {/* Messages */}
+        {/* Messages Area */}
         <ScrollArea ref={scrollAreaRef} className="flex-1">
-          <div className="container mx-auto max-w-4xl py-8 px-4">
+          <div className="container mx-auto max-w-4xl py-6 px-4 space-y-6">
             {messages.map((message, index) => (
               <ChatMessage key={index} {...message} />
             ))}
           </div>
         </ScrollArea>
 
-        {/* Input */}
-        <ChatInput
-          onSendMessage={handleSendMessage}
-          onFileUpload={handleFileUpload}
-          disabled={isAnalyzing}
-        />
+        {/* Input Area */}
+        <div className="border-t">
+          <ChatInput
+            onSendMessage={handleSendMessage}
+            onFileUpload={handleFileUpload}
+            disabled={isAnalyzing}
+          />
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
