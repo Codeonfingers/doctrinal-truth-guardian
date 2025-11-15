@@ -28,6 +28,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/analyzer" element={<Chat />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dataset-screening" element={<DatasetScreening />} />
           <Route path="/reports" element={<Reports />} />

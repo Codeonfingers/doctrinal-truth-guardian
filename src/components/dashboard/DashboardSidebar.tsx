@@ -13,7 +13,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-  { label: "Analyzer", icon: MessageSquare, path: "/chat" },
+  { label: "Analyzer", icon: MessageSquare, path: "/analyzer" },
   { label: "Dataset Screening", icon: Database, path: "/dataset-screening" },
   { label: "Reports", icon: FileText, path: "/reports" },
   { label: "Model Management", icon: Settings, path: "/model-management" },

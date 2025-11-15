@@ -42,14 +42,14 @@ export function DashboardTopBar({ title, onMobileMenuToggle }: DashboardTopBarPr
       </div>
 
       {/* Right: Upload + Notifications + User */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 md:gap-3">
         <Button
           onClick={() => navigate("/chat")}
           size="sm"
           className="bg-primary text-primary-foreground hover:bg-primary/90"
         >
-          <Upload className="h-4 w-4 mr-2" />
-          <span className="hidden sm:inline">Upload</span>
+          <Upload className="h-4 w-4 md:mr-2" />
+          <span className="hidden md:inline">Upload</span>
         </Button>
 
         <Button variant="ghost" size="icon" className="relative">
