@@ -6,6 +6,8 @@ import { FeatureCard } from "@/components/landing/FeatureCard";
 import { HowItWorksStep } from "@/components/landing/HowItWorksStep";
 import { PricingCard } from "@/components/landing/PricingCard";
 import { TrustBadge } from "@/components/landing/TrustBadge";
+import { DoctrinalScorePreview } from "@/components/landing/DoctrinalScorePreview";
+import { TrustSection } from "@/components/landing/TrustSection";
 import heroLaptop from "@/assets/hero-laptop.png";
 import { 
   Upload, 
@@ -19,7 +21,9 @@ import {
   Shield,
   Lock,
   Users,
-  Star
+  Star,
+  CheckCircle2,
+  Youtube
 } from "lucide-react";
 
 const Index = () => {
@@ -31,145 +35,171 @@ const Index = () => {
 
       {/* Hero Section */}
       <main className="flex-1 w-full">
-        <div className="container mx-auto max-w-screen-xl px-4 sm:px-6 py-12 md:py-20">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="container mx-auto max-w-screen-xl px-4 sm:px-6 py-16 md:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
-            <div className="space-y-6 md:space-y-8">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-                Guard Against False Doctrine in Religious Content
+            <div className="space-y-8">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+                Your AI Guardian Against False Doctrine
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-md leading-relaxed">
-                Upload your material and receive a thorough analysis to ensure doctrinal accuracy and integrity.
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
+                DoctrineShield detects misinterpretation, false teachings, spiritual manipulation, and doctrinal errors in sermons, books, videos, teachings, and counseling.
               </p>
               
               {/* Value Props */}
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm sm:text-base">
-                  <Brain className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-foreground font-medium">AI-powered doctrinal audit</span>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <Brain className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <p className="font-semibold text-foreground">AI-powered doctrinal audit</p>
+                    <p className="text-sm text-muted-foreground">Advanced AI trained on biblical theology</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-sm sm:text-base">
-                  <BookOpen className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-foreground font-medium">80,000+ scriptural cross-references analyzed</span>
+                <div className="flex items-start gap-3">
+                  <BookOpen className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <p className="font-semibold text-foreground">80,000+ scriptural cross-references</p>
+                    <p className="text-sm text-muted-foreground">Comprehensive biblical database</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-sm sm:text-base">
-                  <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-foreground font-medium">Detects false doctrine instantly</span>
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <p className="font-semibold text-foreground">Detects false doctrine instantly</p>
+                    <p className="text-sm text-muted-foreground">Real-time analysis and alerts</p>
+                  </div>
                 </div>
               </div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Button
                   onClick={() => navigate("/analyzer")}
                   size="lg"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-glow transition-all text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-glow transition-all text-lg px-8 py-6"
                 >
-                  Start Analysis
+                  Start Doctrinal Scan
                 </Button>
                 <Button
-                  onClick={() => navigate("/pricing")}
+                  onClick={() => navigate("/analyzer")}
                   variant="outline"
                   size="lg"
-                  className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6"
+                  className="text-lg px-8 py-6"
                 >
-                  View Pricing
+                  See Live Demo
                 </Button>
               </div>
             </div>
 
             {/* Right Column - Illustration */}
-            <div className="flex items-center justify-center">
-              <img
-                src={heroLaptop}
-                alt="DoctrineShield Analysis Platform"
-                className="w-full max-w-2xl h-auto animate-fade-in"
-              />
+            <div className="flex items-center justify-center lg:justify-end">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full"></div>
+                <img
+                  src={heroLaptop}
+                  alt="DoctrineShield AI Analysis Platform detecting false doctrine in religious content"
+                  className="relative w-full max-w-2xl h-auto animate-fade-in"
+                />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Features Section */}
-        <div className="bg-secondary/30 py-16 md:py-20">
+        <div id="features" className="bg-secondary/30 py-20 md:py-28">
           <div className="container mx-auto max-w-screen-xl px-4 sm:px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
                 Powerful Features for Doctrinal Analysis
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Everything you need to ensure theological soundness in your materials
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <FeatureCard
-                icon={Upload}
-                title="Upload Documents"
-                description="Support for PDF, Word documents, and audio files. Simply drag and drop to begin analysis."
-              />
+            <div className="grid sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <FeatureCard
                 icon={ScanSearch}
-                title="Instant Doctrinal Scan"
-                description="Advanced AI engine analyzes your content against biblical doctrine in seconds."
-              />
-              <FeatureCard
-                icon={AlertTriangle}
-                title="Heresy Risk Meter"
-                description="Color-coded severity ratings help you quickly identify areas of concern."
+                title="Doctrinal Integrity Scanner"
+                description="Flags false teachings, heresy risk, and manipulative doctrines with precision AI analysis trained on biblical theology."
               />
               <FeatureCard
                 icon={BookOpen}
-                title="Scripture-based Corrections"
-                description="Receive suggested corrections backed by relevant Bible passages and references."
+                title="Scripture-Based Corrections"
+                description="Automated corrections with verse references from 80,000+ scriptural cross-references for accurate biblical guidance."
               />
               <FeatureCard
-                icon={Brain}
-                title="AI-Powered Analysis"
-                description="Leverages cutting-edge machine learning trained on orthodox theological texts."
+                icon={AlertTriangle}
+                title="False Counsel Detection"
+                description="Identifies problematic teachings in marriage, prosperity gospel, deliverance ministry, and prophetic advisories."
               />
               <FeatureCard
-                icon={FileCheck}
-                title="Comprehensive Reports"
-                description="Download detailed PDF reports with heatmaps, flagged issues, and recommendations."
+                icon={Upload}
+                title="Universal Content Upload"
+                description="Support for PDF, Word, audio transcripts, voice notes, YouTube links, and raw text. Upload anything."
               />
             </div>
           </div>
         </div>
 
         {/* How It Works Section */}
-        <div className="py-16 md:py-20">
+        <div id="how-it-works" className="py-20 md:py-28">
           <div className="container mx-auto max-w-screen-xl px-4 sm:px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
                 How It Works
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                Three simple steps to doctrinal clarity
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Four simple steps to doctrinal clarity
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-12 md:gap-8 max-w-5xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
               <HowItWorksStep
                 number={1}
                 icon={FileUp}
-                title="Upload"
-                description="Upload your document, book, sermon, or teaching material in any supported format."
+                title="Upload Content"
+                description="Upload sermons, books, videos, teachings, or counseling materials in any format."
               />
               <HowItWorksStep
                 number={2}
                 icon={ScanSearch}
-                title="Analyze"
-                description="Our AI engine scans your content against scriptural truth and orthodox doctrine."
+                title="AI Doctrinal Scan"
+                description="Our AI analyzes against 80,000+ scriptural references and theological patterns."
               />
               <HowItWorksStep
                 number={3}
                 icon={FileCheck}
                 title="Receive Report"
-                description="Get a comprehensive report with integrity score, flagged issues, and corrections."
+                description="Get detailed report with integrity score, risk level, and flagged issues."
+              />
+              <HowItWorksStep
+                number={4}
+                icon={CheckCircle2}
+                title="Share or Save"
+                description="Download PDF reports, share findings, or archive for future reference."
               />
             </div>
           </div>
         </div>
+
+        {/* Score Preview Section */}
+        <div className="bg-secondary/30 py-20 md:py-28">
+          <div className="container mx-auto max-w-screen-xl px-4 sm:px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+                Comprehensive Doctrinal Analysis
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Get detailed insights with our AI-powered integrity scoring system
+              </p>
+            </div>
+            <DoctrinalScorePreview />
+          </div>
+        </div>
+
+        {/* Trust & Security Section */}
+        <TrustSection />
 
         {/* Pricing Section */}
         <div className="bg-secondary/30 py-16 md:py-20">
@@ -235,19 +265,19 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Trust & Credibility Section */}
-        <div className="py-16 md:py-20">
+        {/* Testimonials Section */}
+        <div className="py-20 md:py-28">
           <div className="container mx-auto max-w-screen-xl px-4 sm:px-6">
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
                 Trusted by Ministry Leaders Worldwide
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                Your security and privacy are our top priorities
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Join 1,000+ pastors and ministry leaders protecting their congregations
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <div className="flex flex-wrap justify-center gap-4 mb-16">
               <TrustBadge icon={Shield} text="Secure Upload" />
               <TrustBadge icon={Lock} text="Data Privacy Guaranteed" />
               <TrustBadge icon={Users} text="Used by 1,000+ Pastors" />
@@ -255,14 +285,19 @@ const Index = () => {
             </div>
 
             {/* Testimonials */}
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-                <p className="text-muted-foreground italic mb-4">
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              <div className="bg-card border border-border rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-warning text-warning" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground italic mb-6 text-lg">
                   "DoctrineShield has been invaluable in helping us review teaching materials before 
                   distributing them to our congregation. The accuracy is remarkable."
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
                     JD
                   </div>
                   <div>
@@ -272,13 +307,18 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-                <p className="text-muted-foreground italic mb-4">
+              <div className="bg-card border border-border rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-warning text-warning" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground italic mb-6 text-lg">
                   "As a seminary professor, I recommend DoctrineShield to all my students. 
                   It's an excellent tool for learning to identify subtle doctrinal errors."
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
                     SM
                   </div>
                   <div>

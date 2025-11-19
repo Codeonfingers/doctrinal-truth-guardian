@@ -1,4 +1,4 @@
-import { Shield, Bell, Upload, Menu } from "lucide-react";
+import { Shield, Bell, Upload, Menu, Moon, Sun, Settings, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface DashboardTopBarProps {
   title: string;
@@ -21,6 +22,7 @@ interface DashboardTopBarProps {
 export function DashboardTopBar({ title, onMobileMenuToggle }: DashboardTopBarProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { theme, toggleTheme } = useTheme();
 
   const handleLogout = async () => {
     try {
@@ -91,12 +93,21 @@ export function DashboardTopBar({ title, onMobileMenuToggle }: DashboardTopBarPr
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={toggleTheme}>
+              {theme === "dark" ? (
+                <Sun className="mr-2 h-4 w-4" />
+              ) : (
+                <Moon className="mr-2 h-4 w-4" />
+              )}
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/auth")}>
+              <Settings className="mr-2 h-4 w-4" />
               Profile Settings
             </DropdownMenuItem>
-            <DropdownMenuItem>Preferences</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="text-destructive cursor-pointer">
+              <LogOut className="mr-2 h-4 w-4" />
               Log Out
             </DropdownMenuItem>
           </DropdownMenuContent>
