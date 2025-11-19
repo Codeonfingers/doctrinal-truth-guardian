@@ -127,36 +127,59 @@ export default function Chat() {
   return (
     <Layout title="Analyzer" hideFooter>
       <div className="flex flex-col h-full">
-        {/* Back to Dashboard Link */}
-        <div className="border-b border-border bg-card px-4 py-3 md:px-6">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate("/dashboard")}
-            className="gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Back to Dashboard</span>
-            <span className="sm:hidden">Back</span>
-          </Button>
+        {/* Top Action Bar */}
+        <div className="border-b border-border bg-card px-4 sm:px-6 py-3">
+          <div className="flex justify-between items-center max-w-5xl mx-auto">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/dashboard")}
+              className="gap-2 hover:bg-accent"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back to Dashboard</span>
+              <span className="sm:hidden">Back</span>
+            </Button>
+            
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden sm:flex hover:bg-accent"
+              >
+                Download Report
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden sm:flex hover:bg-accent"
+              >
+                Share Result
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Messages Area */}
         <ScrollArea ref={scrollAreaRef} className="flex-1">
           <div className="container mx-auto max-w-4xl py-6 px-4 space-y-6">
             {messages.map((message, index) => (
-              <ChatMessage key={index} {...message} />
+              <div key={index} className="animate-fade-in">
+                <ChatMessage {...message} />
+              </div>
             ))}
           </div>
         </ScrollArea>
 
-        {/* Input Area */}
-        <div className="border-t">
-          <ChatInput
-            onSendMessage={handleSendMessage}
-            onFileUpload={handleFileUpload}
-            disabled={isAnalyzing}
-          />
+        {/* Input Area - Fixed at bottom */}
+        <div className="border-t border-border bg-card sticky bottom-0">
+          <div className="container mx-auto max-w-4xl">
+            <ChatInput
+              onSendMessage={handleSendMessage}
+              onFileUpload={handleFileUpload}
+              disabled={isAnalyzing}
+            />
+          </div>
         </div>
       </div>
     </Layout>
