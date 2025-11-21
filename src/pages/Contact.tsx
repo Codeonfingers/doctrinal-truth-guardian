@@ -7,6 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -28,35 +30,28 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Shield className="w-6 h-6 text-primary" />
-            <span className="text-xl font-bold">DoctrineShield™</span>
-          </div>
-          <Button onClick={() => navigate("/")}>Back to Home</Button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background overflow-x-hidden">
+      <Header />
 
       {/* Hero Section */}
-      <div className="bg-gradient-hero text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
+      <section className="bg-gradient-hero text-white py-20 md:py-28">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
+            Contact Us
+          </h1>
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto animate-slide-up">
             Have questions? We'd love to hear from you.
           </p>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 md:gap-12">
           {/* Contact Form */}
-          <Card>
+          <Card className="shadow-lg border-border">
             <CardHeader>
-              <CardTitle>Send us a message</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-2xl">Send us a message</CardTitle>
+              <CardDescription className="text-base">
                 Fill out the form below and we'll get back to you as soon as possible
               </CardDescription>
             </CardHeader>
@@ -110,15 +105,15 @@ const Contact = () => {
           </Card>
 
           {/* Contact Information */}
-          <div className="space-y-6">
-            <Card>
+          <div className="space-y-6 md:space-y-8">
+            <Card className="shadow-lg border-border">
               <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-2xl">Contact Information</CardTitle>
+                <CardDescription className="text-base">
                   Reach out to us through any of these channels
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Mail className="w-5 h-5 text-primary" />
@@ -151,12 +146,12 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-card">
+            <Card className="bg-gradient-card shadow-lg border-border">
               <CardHeader>
-                <CardTitle>Need Help?</CardTitle>
+                <CardTitle className="text-xl">Need Help?</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-muted-foreground mb-6 leading-relaxed">
                   Check out our documentation or contact our support team for assistance with DoctrineShield™.
                 </p>
                 <Button variant="outline" className="w-full">View Documentation</Button>
@@ -164,7 +159,9 @@ const Contact = () => {
             </Card>
           </div>
         </div>
-      </div>
+      </section>
+
+      <Footer />
     </div>
   );
 };

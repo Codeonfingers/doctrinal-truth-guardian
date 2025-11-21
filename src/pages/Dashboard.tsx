@@ -20,19 +20,19 @@ export default function Dashboard() {
 
   return (
     <Layout title="Dashboard">
-      <div className="max-w-screen-xl mx-auto p-4 md:p-6 space-y-4 md:space-y-6">
+      <div className="max-w-screen-xl mx-auto p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8">
         {/* KPI Strip */}
         <KPIStrip />
 
         {/* Main Grid */}
-        <div className="grid lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
           {/* Left Column - Recent Analyses (2/3) */}
           <div className="lg:col-span-2">
             <RecentAnalysesTable onViewDetails={handleViewDetails} />
           </div>
 
           {/* Right Column - Widgets (1/3) */}
-          <div className="space-y-4 md:space-y-6">
+          <div className="space-y-6 md:space-y-8">
             <HeatmapCard />
             <HeresieTrendsCard />
             <ModelHealthCard />

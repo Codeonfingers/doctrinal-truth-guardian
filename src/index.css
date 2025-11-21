@@ -129,20 +129,34 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-family: 'Inter', 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: 'Poppins', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 700;
+    line-height: 1.2;
   }
 
   h1 {
     @apply text-foreground;
-    color: hsl(222 47% 11%);
+    font-size: clamp(2.5rem, 5vw, 3rem);
   }
 
   h2 {
-    color: hsl(215 25% 27%);
+    @apply text-foreground;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+  }
+
+  h3 {
+    @apply text-foreground;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  /* Section spacing */
+  section {
+    @apply py-20 md:py-28;
   }
 }
