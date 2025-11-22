@@ -159,6 +159,7 @@ const Contact = () => {
             </Card>
           </div>
         </div>
+      </div>
       </section>
 
       <Footer />
