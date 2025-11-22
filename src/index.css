@@ -122,9 +122,17 @@ All colors MUST be HSL.
     box-sizing: border-box;
   }
 
+  html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
   html, body, #root {
     @apply overflow-x-hidden;
     width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   body {
@@ -132,6 +140,8 @@ All colors MUST be HSL.
     font-family: 'Inter', 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     font-size: 16px;
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
