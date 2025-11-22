@@ -146,12 +146,12 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-card shadow-lg border-border">
+            <Card className="bg-gradient-card">
               <CardHeader>
-                <CardTitle className="text-xl">Need Help?</CardTitle>
+                <CardTitle >Need Help?</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-4 ">
                   Check out our documentation or contact our support team for assistance with DoctrineShield™.
                 </p>
                 <Button variant="outline" className="w-full">View Documentation</Button>
@@ -160,9 +160,6 @@ const Contact = () => {
           </div>
         </div>
       </div>
-      </section>
-
-      <Footer />
     </div>
   );
 };
