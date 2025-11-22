@@ -148,7 +148,7 @@ const Contact = () => {
 
             <Card className="bg-gradient-card">
               <CardHeader>
-                <CardTitle >Need Help?</CardTitle>
+                <CardTitle className="text-xl" >Need Help?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4 ">
