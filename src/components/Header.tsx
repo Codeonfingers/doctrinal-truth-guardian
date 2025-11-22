@@ -22,18 +22,18 @@ export function Header() {
   return (
     <>
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b border-border shadow-sm">
+      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
         <div className="container mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo (Left) */}
-          <div className="flex items-center gap-2 cursor-pointer flex-shrink-0" onClick={() => navigate("/")}>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary shadow-md">
+           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
               <Shield className="h-5 w-5 text-primary-foreground" />
             </div>
             <span className="text-lg font-bold text-foreground hidden sm:inline">DoctrineShield</span>
           </div>
 
           {/* Center Menu (Desktop) */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-6">
             {navItems.map((item) => (
               <button
                 key={item.path}
