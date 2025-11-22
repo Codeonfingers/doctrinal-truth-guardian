@@ -34,7 +34,8 @@ const Index = () => {
       <Header />
 
       {/* Hero Section */}
-      <main className="flex-1 w-full">
+      {/*<main className="flex-1 w-full">*/}
+      <main className="pt-16">
         <div className="container mx-auto max-w-screen-xl px-4 sm:px-6 py-16 md:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
