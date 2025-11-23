@@ -166,7 +166,18 @@ All colors MUST be HSL.
   }
 
   /* Section spacing */
-  section {
+  /*section {
     @apply py-20 md:py-28;
-  }
+  }*/
+    section:first-of-type{
+      padding-top:0;
+    }
+    header{
+      margin-top:0;
+      overflow: auto;
+    }
+    header > *:first-child{
+      margin-top:0;
+    }
+    
 }
