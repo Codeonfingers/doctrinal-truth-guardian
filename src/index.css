@@ -126,6 +126,7 @@ All colors MUST be HSL.
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   html, body, #root {
@@ -165,19 +166,16 @@ All colors MUST be HSL.
     font-size: clamp(1.5rem, 3vw, 2rem);
   }
 
-  /* Section spacing */
-  /*section {
-    @apply py-20 md:py-28;
-  }*/
-    section:first-of-type{
-      padding-top:0;
-    }
-    header{
-      margin-top:0;
-      overflow: auto;
-    }
-    header > *:first-child{
-      margin-top:0;
-    }
-    
+  section:first-of-type {
+    padding-top: 0;
+  }
+  
+  header {
+    margin-top: 0;
+    overflow: auto;
+  }
+  
+  header > *:first-child {
+    margin-top: 0;
+  }
 }
