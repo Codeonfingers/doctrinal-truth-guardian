@@ -5,18 +5,26 @@ import { ChatInput } from "@/components/ChatInput";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { VerdictType } from "@/components/VerdictBadge";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Download, Share2, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RecordButton } from "@/components/chat/RecordButton";
+import { AudioMessage } from "@/components/chat/AudioMessage";
+import { VoiceAnalysisCard } from "@/components/chat/VoiceAnalysisCard";
+import { LiveSermonMode } from "@/components/chat/LiveSermonMode";
+import { CounselingModeToggle } from "@/components/chat/CounselingModeToggle";
+import { toast } from "sonner";
 
 export default function Chat() {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessageProps[]>([
     {
       role: "assistant",
-      content: "Welcome to DoctrineShield™ — The Autonomous Spiritual Intelligence Engine. I can analyze Christian materials for theological soundness, detect doctrinal deviations, and provide comprehensive integrity scores. Upload a document or ask me a question to get started.",
+      content: "Welcome to DoctrineShield™ — The Autonomous Spiritual Intelligence Engine. I can analyze Christian materials for theological soundness, detect doctrinal deviations, and provide comprehensive integrity scores. Upload a document, record audio, or ask me a question to get started.",
     },
   ]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [liveSermonOpen, setLiveSermonOpen] = useState(false);
+  const [counselingMode, setCounselingMode] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new messages arrive
@@ -45,11 +53,59 @@ export default function Chat() {
     }, 1000);
   };
 
+  const handleRecordingComplete = async (audioBlob: Blob) => {
+    const audioUrl = URL.createObjectURL(audioBlob);
+    
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", content: "🎤 Voice recording submitted for analysis" },
+    ]);
+    
+    setIsAnalyzing(true);
+    setMessages((prev) => [...prev, { role: "assistant", isTyping: true }]);
+
+    // Simulate audio transcription and analysis
+    setTimeout(() => {
+      setMessages((prev) => prev.filter((msg) => !msg.isTyping));
+      
+      const mockScore = Math.floor(Math.random() * 30) + 70;
+      const verdict: VerdictType = mockScore >= 85 ? "safe" : mockScore >= 65 ? "caution" : "danger";
+      
+      const mockIssues = mockScore < 85 ? [
+        {
+          section: "00:45 - 01:15",
+          flag: counselingMode ? "Manipulative counsel detected" : "Prosperity emphasis",
+          severity: "medium" as const,
+          quote: "God promises to make you financially successful if you have enough faith...",
+        },
+      ] : [];
+
+      const analysisResult: AnalysisResult = {
+        score: mockScore,
+        verdict,
+        fileName: "Voice Recording",
+        issues: mockIssues,
+      };
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "Audio Analysis Complete",
+          analysisResult,
+        },
+      ]);
+      
+      setIsAnalyzing(false);
+      toast.success("Audio transcription and analysis complete");
+    }, 3500);
+  };
+
   const handleFileUpload = (file: File) => {
     // Add user message about file upload
     setMessages((prev) => [
       ...prev,
-      { role: "user", content: `Uploaded document: ${file.name}` },
+      { role: "user", content: `📎 Uploaded document: ${file.name}` },
     ]);
 
     // Show typing indicator
@@ -128,7 +184,7 @@ export default function Chat() {
     <Layout title="Analyzer" hideFooter>
       <div className="flex flex-col h-full">
         {/* Top Action Bar */}
-        <div className="border-b border-border bg-card px-4 sm:px-6 py-3">
+        <div className="border-b border-border bg-card px-4 sm:px-6 py-3 space-y-3">
           <div className="flex justify-between items-center max-w-5xl mx-auto">
             <Button
               variant="ghost"
@@ -145,18 +201,36 @@ export default function Chat() {
               <Button
                 variant="outline"
                 size="sm"
-                className="hidden sm:flex hover:bg-accent"
+                onClick={() => setLiveSermonOpen(true)}
+                className="gap-2"
               >
-                Download Report
+                <Radio className="h-4 w-4" />
+                <span className="hidden sm:inline">Live Sermon</span>
               </Button>
               <Button
                 variant="outline"
                 size="sm"
-                className="hidden sm:flex hover:bg-accent"
+                className="hidden sm:flex hover:bg-accent gap-2"
               >
-                Share Result
+                <Download className="h-4 w-4" />
+                <span>Download Report</span>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden md:flex hover:bg-accent gap-2"
+              >
+                <Share2 className="h-4 w-4" />
+                <span>Share</span>
               </Button>
             </div>
+          </div>
+          
+          <div className="max-w-5xl mx-auto">
+            <CounselingModeToggle 
+              enabled={counselingMode}
+              onToggle={setCounselingMode}
+            />
           </div>
         </div>
 
@@ -171,17 +245,31 @@ export default function Chat() {
           </div>
         </ScrollArea>
 
-        {/* Input Area - Fixed at bottom */}
+        {/* Input Area with Recording */}
         <div className="border-t border-border bg-card sticky bottom-0">
-          <div className="container mx-auto max-w-4xl">
-            <ChatInput
-              onSendMessage={handleSendMessage}
-              onFileUpload={handleFileUpload}
-              disabled={isAnalyzing}
-            />
+          <div className="container mx-auto max-w-4xl p-3 md:p-4">
+            <div className="flex gap-2 items-end">
+              <RecordButton 
+                onRecordingComplete={handleRecordingComplete}
+                disabled={isAnalyzing}
+              />
+              <div className="flex-1">
+                <ChatInput
+                  onSendMessage={handleSendMessage}
+                  onFileUpload={handleFileUpload}
+                  disabled={isAnalyzing}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Live Sermon Mode Modal */}
+      <LiveSermonMode 
+        open={liveSermonOpen}
+        onClose={() => setLiveSermonOpen(false)}
+      />
     </Layout>
   );
 }

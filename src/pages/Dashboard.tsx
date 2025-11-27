@@ -8,6 +8,10 @@ import { DatasetScreeningCard } from "@/components/dashboard/DatasetScreeningCar
 import { HeresieTrendsCard } from "@/components/dashboard/HeresieTrendsCard";
 import { ReportSlideOver } from "@/components/dashboard/ReportSlideOver";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
+import { WorkspaceSwitcher } from "@/components/dashboard/WorkspaceSwitcher";
+import { RoleBadge } from "@/components/dashboard/RoleBadge";
+import { InviteModal } from "@/components/dashboard/InviteModal";
+import { GlobalSearch } from "@/components/dashboard/GlobalSearch";
 
 export default function Dashboard() {
   const [selectedAnalysis, setSelectedAnalysis] = useState<any>(null);
@@ -21,6 +25,17 @@ export default function Dashboard() {
   return (
     <Layout title="Dashboard">
       <div className="max-w-screen-xl mx-auto p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8">
+        {/* Workspace Controls & Search */}
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <WorkspaceSwitcher />
+              <RoleBadge role="admin" />
+            </div>
+            <InviteModal />
+          </div>
+          <GlobalSearch />
+        </div>
         {/* KPI Strip */}
         <KPIStrip />
 
