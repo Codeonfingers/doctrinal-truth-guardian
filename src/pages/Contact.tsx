@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { Header } from "@/components/Header";
+import { SmartHeader } from "@/components/SmartHeader";
 import { Footer } from "@/components/Footer";
 
 const Contact = () => {
@@ -31,7 +31,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <Header />
+      <SmartHeader />
 
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-20 md:py-28">

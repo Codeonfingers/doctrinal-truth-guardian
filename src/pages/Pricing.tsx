@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Header } from "@/components/Header";
+import { SmartHeader } from "@/components/SmartHeader";
 import { Footer } from "@/components/Footer";
 import { PricingCard } from "@/components/landing/PricingCard";
 import { TrustBadge } from "@/components/landing/TrustBadge";
@@ -10,7 +10,7 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
-      <Header />
+      <SmartHeader />
       <main className="flex-1 container mx-auto max-w-screen-xl px-4 sm:px-6 py-12 md:py-20">
         <div className="text-center space-y-4 mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-foreground">Pricing Plans</h1>

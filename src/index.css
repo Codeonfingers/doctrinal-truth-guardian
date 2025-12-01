@@ -143,6 +143,7 @@ All colors MUST be HSL.
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -177,5 +178,15 @@ All colors MUST be HSL.
   
   header > *:first-child {
     margin-top: 0;
+  }
+
+  /* Smooth transitions for interactive elements */
+  button, a {
+    transition: all 0.2s ease;
+  }
+
+  /* Smooth backdrop blur transitions */
+  [class*="backdrop-blur"] {
+    transition: backdrop-filter 0.3s ease;
   }
 }

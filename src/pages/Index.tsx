@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Header } from "@/components/Header";
+import { SmartHeader } from "@/components/SmartHeader";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { FeatureCard } from "@/components/landing/FeatureCard";
@@ -9,6 +9,8 @@ import { TrustBadge } from "@/components/landing/TrustBadge";
 import { DoctrinalScorePreview } from "@/components/landing/DoctrinalScorePreview";
 import { TrustSection } from "@/components/landing/TrustSection";
 import heroLaptop from "@/assets/hero-laptop.png";
+import { useEffect } from "react";
+import { toast } from "sonner";
 import { 
   Upload, 
   Search, 
@@ -29,9 +31,22 @@ import {
 const Index = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
+    if (!hasSeenWelcome) {
+      setTimeout(() => {
+        toast("💡 Quick Tip", {
+          description: "Press ⌘K (or Ctrl+K) to open the command palette and navigate quickly!",
+          duration: 5000,
+        });
+        localStorage.setItem("hasSeenWelcome", "true");
+      }, 2000);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
-      <Header />
+      <SmartHeader />
 
       {/* Hero Section */}
       <main className="flex-1 w-full">
