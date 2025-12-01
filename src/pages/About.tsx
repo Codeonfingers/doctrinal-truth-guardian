@@ -1,7 +1,7 @@
 import { Shield, Target, Users, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Header } from "@/components/Header";
+import { SmartHeader } from "@/components/SmartHeader";
 import { Footer } from "@/components/Footer";
 
 const About = () => {
@@ -9,7 +9,7 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <Header />
+      <SmartHeader />
 
       {/* Hero Section */}
       <section className="bg-gradient-hero text-white py-20 md:py-28">
