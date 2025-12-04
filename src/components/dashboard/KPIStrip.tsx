@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { TrendingUp, FileText, Gauge, AlertCircle } from "lucide-react";
+import { FileText, AlertTriangle, ClipboardList, Mic } from "lucide-react";
 
 interface KPICardProps {
   title: string;
@@ -9,29 +9,31 @@ interface KPICardProps {
     value: number;
     positive: boolean;
   };
-  onClick?: () => void;
+  iconBgClass?: string;
+  iconTextClass?: string;
 }
 
-function KPICard({ title, value, icon, trend, onClick }: KPICardProps) {
+function KPICard({ title, value, icon, trend, iconBgClass = "bg-primary/10", iconTextClass = "text-primary" }: KPICardProps) {
   return (
-    <Card 
-      className="cursor-pointer hover:shadow-md transition-shadow"
-      onClick={onClick}
-    >
+    <Card className="hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
       <CardContent className="pt-6">
-        <div className="flex items-center justify-between mb-2">
-          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+        <div className="flex items-center justify-between mb-3">
+          <div className={`h-12 w-12 rounded-xl ${iconBgClass} flex items-center justify-center ${iconTextClass}`}>
             {icon}
           </div>
           {trend && (
-            <span className={`text-xs font-medium ${trend.positive ? 'text-success' : 'text-destructive'}`}>
+            <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
+              trend.positive 
+                ? 'bg-success/10 text-success' 
+                : 'bg-destructive/10 text-destructive'
+            }`}>
               {trend.positive ? '+' : ''}{trend.value}%
             </span>
           )}
         </div>
-        <div className="mt-3">
-          <p className="text-2xl font-bold text-foreground">{value}</p>
-          <p className="text-sm text-muted-foreground mt-1">{title}</p>
+        <div className="space-y-1">
+          <p className="text-3xl font-bold text-foreground tracking-tight">{value}</p>
+          <p className="text-sm text-muted-foreground font-medium">{title}</p>
         </div>
       </CardContent>
     </Card>
@@ -40,28 +42,38 @@ function KPICard({ title, value, icon, trend, onClick }: KPICardProps) {
 
 export function KPIStrip() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <KPICard
-        title="Doctrinal Integrity (7d avg)"
-        value="87.3"
-        icon={<Gauge className="h-5 w-5" />}
-        trend={{ value: 5.2, positive: true }}
-      />
-      <KPICard
-        title="Analyses (Today)"
-        value="24"
-        icon={<FileText className="h-5 w-5" />}
+        title="Total Scans"
+        value="1,248"
+        icon={<FileText className="h-6 w-6" />}
         trend={{ value: 12, positive: true }}
+        iconBgClass="bg-primary/10"
+        iconTextClass="text-primary"
       />
       <KPICard
-        title="Avg Doctrinal Score"
-        value="82/100"
-        icon={<TrendingUp className="h-5 w-5" />}
+        title="High-Risk Findings"
+        value="47"
+        icon={<AlertTriangle className="h-6 w-6" />}
+        trend={{ value: 8, positive: false }}
+        iconBgClass="bg-destructive/10"
+        iconTextClass="text-destructive"
       />
       <KPICard
-        title="Pending Reviews"
-        value="3"
-        icon={<AlertCircle className="h-5 w-5" />}
+        title="Reports Generated"
+        value="326"
+        icon={<ClipboardList className="h-6 w-6" />}
+        trend={{ value: 24, positive: true }}
+        iconBgClass="bg-success/10"
+        iconTextClass="text-success"
+      />
+      <KPICard
+        title="Audio Uploads"
+        value="89"
+        icon={<Mic className="h-6 w-6" />}
+        trend={{ value: 15, positive: true }}
+        iconBgClass="bg-warning/10"
+        iconTextClass="text-warning-foreground"
       />
     </div>
   );
