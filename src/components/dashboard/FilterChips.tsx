@@ -1,15 +1,14 @@
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 
-interface FilterChip {
+export interface FilterChip {
   id: string;
   label: string;
   category: "risk" | "category" | "fileType";
   active: boolean;
 }
 
-const initialFilters: FilterChip[] = [
+export const initialFilters: FilterChip[] = [
   { id: "high-risk", label: "High Risk", category: "risk", active: false },
   { id: "moderate-risk", label: "Moderate Risk", category: "risk", active: false },
   { id: "low-risk", label: "Low Risk", category: "risk", active: false },
@@ -21,11 +20,14 @@ const initialFilters: FilterChip[] = [
   { id: "docx", label: "DOCX", category: "fileType", active: false },
 ];
 
-export function FilterChips() {
-  const [filters, setFilters] = useState<FilterChip[]>(initialFilters);
+interface FilterChipsProps {
+  filters: FilterChip[];
+  onFiltersChange: (filters: FilterChip[]) => void;
+}
 
+export function FilterChips({ filters, onFiltersChange }: FilterChipsProps) {
   const toggleFilter = (id: string) => {
-    setFilters(filters.map(f => 
+    onFiltersChange(filters.map(f => 
       f.id === id ? { ...f, active: !f.active } : f
     ));
   };
@@ -34,7 +36,7 @@ export function FilterChips() {
   const hasActiveFilters = activeFilters.length > 0;
 
   const clearAllFilters = () => {
-    setFilters(filters.map(f => ({ ...f, active: false })));
+    onFiltersChange(filters.map(f => ({ ...f, active: false })));
   };
 
   const getCategoryColor = (category: FilterChip["category"], active: boolean) => {

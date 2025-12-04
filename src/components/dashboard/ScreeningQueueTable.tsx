@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,14 +17,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { FilterChip } from "./FilterChips";
 
-interface QueueItem {
+export interface QueueItem {
   id: string;
   fileName: string;
   fileType: "pdf" | "docx" | "audio" | "text";
   riskLevel: "low" | "moderate" | "high";
   status: "pending" | "processing" | "completed" | "flagged";
   date: string;
+  score?: number;
+  uploadedBy?: string;
 }
 
 const mockQueueItems: QueueItem[] = [
@@ -35,6 +38,8 @@ const mockQueueItems: QueueItem[] = [
     riskLevel: "low",
     status: "completed",
     date: "2025-01-14",
+    score: 92,
+    uploadedBy: "Pastor John",
   },
   {
     id: "2",
@@ -43,6 +48,8 @@ const mockQueueItems: QueueItem[] = [
     riskLevel: "high",
     status: "flagged",
     date: "2025-01-14",
+    score: 45,
+    uploadedBy: "Elder Mike",
   },
   {
     id: "3",
@@ -51,6 +58,8 @@ const mockQueueItems: QueueItem[] = [
     riskLevel: "moderate",
     status: "processing",
     date: "2025-01-13",
+    score: 68,
+    uploadedBy: "Admin Sarah",
   },
   {
     id: "4",
@@ -59,6 +68,8 @@ const mockQueueItems: QueueItem[] = [
     riskLevel: "low",
     status: "pending",
     date: "2025-01-13",
+    score: 88,
+    uploadedBy: "Deacon Paul",
   },
   {
     id: "5",
@@ -67,15 +78,47 @@ const mockQueueItems: QueueItem[] = [
     riskLevel: "moderate",
     status: "completed",
     date: "2025-01-12",
+    score: 72,
+    uploadedBy: "Pastor John",
   },
 ];
 
 interface ScreeningQueueTableProps {
   onViewDetails?: (item: QueueItem) => void;
+  filters?: FilterChip[];
 }
 
-export function ScreeningQueueTable({ onViewDetails }: ScreeningQueueTableProps) {
-  const [items] = useState<QueueItem[]>(mockQueueItems);
+export function ScreeningQueueTable({ onViewDetails, filters = [] }: ScreeningQueueTableProps) {
+  const filteredItems = useMemo(() => {
+    const activeRiskFilters = filters.filter(f => f.category === "risk" && f.active);
+    const activeFileTypeFilters = filters.filter(f => f.category === "fileType" && f.active);
+    
+    return mockQueueItems.filter(item => {
+      // Risk filter
+      if (activeRiskFilters.length > 0) {
+        const riskMatch = activeRiskFilters.some(f => {
+          if (f.id === "high-risk") return item.riskLevel === "high";
+          if (f.id === "moderate-risk") return item.riskLevel === "moderate";
+          if (f.id === "low-risk") return item.riskLevel === "low";
+          return false;
+        });
+        if (!riskMatch) return false;
+      }
+      
+      // File type filter
+      if (activeFileTypeFilters.length > 0) {
+        const typeMatch = activeFileTypeFilters.some(f => {
+          if (f.id === "pdf") return item.fileType === "pdf";
+          if (f.id === "audio") return item.fileType === "audio";
+          if (f.id === "docx") return item.fileType === "docx";
+          return false;
+        });
+        if (!typeMatch) return false;
+      }
+      
+      return true;
+    });
+  }, [filters]);
 
   const getFileTypeIcon = (type: QueueItem["fileType"]) => {
     const icons = {
@@ -148,65 +191,73 @@ export function ScreeningQueueTable({ onViewDetails }: ScreeningQueueTableProps)
               </TableRow>
             </TableHeader>
             <TableBody>
-              {items.map((item) => (
-                <TableRow 
-                  key={item.id}
-                  className="cursor-pointer hover:bg-muted/30 transition-colors"
-                  onClick={() => onViewDetails?.(item)}
-                >
-                  <TableCell className="font-medium">{item.fileName}</TableCell>
-                  <TableCell>{getFileTypeBadge(item.fileType)}</TableCell>
-                  <TableCell>{getRiskBadge(item.riskLevel)}</TableCell>
-                  <TableCell>{getStatusBadge(item.status)}</TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {new Date(item.date).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8 w-8 p-0"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onViewDetails?.(item);
-                        }}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8 w-8 p-0"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-8 w-8 p-0"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>Re-scan</DropdownMenuItem>
-                          <DropdownMenuItem>Mark as reviewed</DropdownMenuItem>
-                          <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
+              {filteredItems.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                    No items match the selected filters
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                filteredItems.map((item) => (
+                  <TableRow 
+                    key={item.id}
+                    className="cursor-pointer hover:bg-muted/30 transition-colors"
+                    onClick={() => onViewDetails?.(item)}
+                  >
+                    <TableCell className="font-medium">{item.fileName}</TableCell>
+                    <TableCell>{getFileTypeBadge(item.fileType)}</TableCell>
+                    <TableCell>{getRiskBadge(item.riskLevel)}</TableCell>
+                    <TableCell>{getStatusBadge(item.status)}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {new Date(item.date).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric',
+                        year: 'numeric'
+                      })}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onViewDetails?.(item);
+                          }}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Download className="h-4 w-4" />
+                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem>Re-scan</DropdownMenuItem>
+                            <DropdownMenuItem>Mark as reviewed</DropdownMenuItem>
+                            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
