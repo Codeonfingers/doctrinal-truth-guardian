@@ -13,7 +13,6 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { 
   Upload, 
-  Search, 
   AlertTriangle, 
   BookOpen, 
   Brain,
@@ -24,9 +23,9 @@ import {
   Lock,
   Users,
   Star,
-  CheckCircle2,
-  Youtube
+  CheckCircle2
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -49,7 +48,7 @@ const Index = () => {
       <SmartHeader />
 
       {/* Hero Section */}
-      <main className="flex-1 w-full pt-16">
+      <main className="flex-1 w-full pt-16 md:pt-20">
         <div className="container mx-auto max-w-screen-xl px-4 sm:px-6 py-12 md:py-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
