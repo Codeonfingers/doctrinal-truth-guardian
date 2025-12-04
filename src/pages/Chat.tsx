@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { Layout } from "@/components/Layout";
 import { ChatMessage, ChatMessageProps, AnalysisResult } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { VerdictType } from "@/components/VerdictBadge";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Download, Share2, Radio } from "lucide-react";
+import { ArrowLeft, Download, Share2, Radio, PanelLeftClose, PanelLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RecordButton } from "@/components/chat/RecordButton";
-import { AudioMessage } from "@/components/chat/AudioMessage";
-import { VoiceAnalysisCard } from "@/components/chat/VoiceAnalysisCard";
 import { LiveSermonMode } from "@/components/chat/LiveSermonMode";
 import { CounselingModeToggle } from "@/components/chat/CounselingModeToggle";
+import { ConversationsSidebar } from "@/components/chat/ConversationsSidebar";
+import { RecordingModal } from "@/components/chat/RecordingModal";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export default function Chat() {
   const navigate = useNavigate();
@@ -24,7 +24,9 @@ export default function Chat() {
   ]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [liveSermonOpen, setLiveSermonOpen] = useState(false);
+  const [recordingModalOpen, setRecordingModalOpen] = useState(false);
   const [counselingMode, setCounselingMode] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new messages arrive
@@ -38,10 +40,8 @@ export default function Chat() {
   }, [messages]);
 
   const handleSendMessage = (message: string) => {
-    // Add user message
     setMessages((prev) => [...prev, { role: "user", content: message }]);
 
-    // Simulate assistant response
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -64,7 +64,6 @@ export default function Chat() {
     setIsAnalyzing(true);
     setMessages((prev) => [...prev, { role: "assistant", isTyping: true }]);
 
-    // Simulate audio transcription and analysis
     setTimeout(() => {
       setMessages((prev) => prev.filter((msg) => !msg.isTyping));
       
@@ -102,23 +101,18 @@ export default function Chat() {
   };
 
   const handleFileUpload = (file: File) => {
-    // Add user message about file upload
     setMessages((prev) => [
       ...prev,
       { role: "user", content: `📎 Uploaded document: ${file.name}` },
     ]);
 
-    // Show typing indicator
     setIsAnalyzing(true);
     setMessages((prev) => [...prev, { role: "assistant", isTyping: true }]);
 
-    // Simulate analysis
     setTimeout(() => {
-      // Remove typing indicator
       setMessages((prev) => prev.filter((msg) => !msg.isTyping));
 
-      // Generate mock analysis result
-      const mockScore = Math.floor(Math.random() * 40) + 60; // 60-100
+      const mockScore = Math.floor(Math.random() * 40) + 60;
       const verdict: VerdictType =
         mockScore >= 80 ? "safe" : mockScore >= 50 ? "caution" : "danger";
 
@@ -181,53 +175,78 @@ export default function Chat() {
   };
 
   return (
-    <Layout title="Analyzer" hideFooter>
-      <div className="flex flex-col h-full">
+    <div className="flex h-screen bg-background">
+      {/* Left Sidebar */}
+      <div
+        className={cn(
+          "hidden md:flex transition-all duration-300 border-r border-border",
+          sidebarOpen ? "w-80" : "w-0 overflow-hidden"
+        )}
+      >
+        <ConversationsSidebar />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Top Action Bar */}
-        <div className="border-b border-border bg-card px-4 sm:px-6 py-3 space-y-3">
-          <div className="flex justify-between items-center max-w-5xl mx-auto">
+        <div className="border-b border-border bg-card px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="hidden md:flex"
+            >
+              {sidebarOpen ? (
+                <PanelLeftClose className="h-4 w-4" />
+              ) : (
+                <PanelLeft className="h-4 w-4" />
+              )}
+            </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate("/dashboard")}
-              className="gap-2 hover:bg-accent"
+              className="gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back to Dashboard</span>
-              <span className="sm:hidden">Back</span>
+              <span className="hidden sm:inline">Dashboard</span>
             </Button>
-            
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setLiveSermonOpen(true)}
-                className="gap-2"
-              >
-                <Radio className="h-4 w-4" />
-                <span className="hidden sm:inline">Live Sermon</span>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="hidden sm:flex hover:bg-accent gap-2"
-              >
-                <Download className="h-4 w-4" />
-                <span>Download Report</span>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="hidden md:flex hover:bg-accent gap-2"
-              >
-                <Share2 className="h-4 w-4" />
-                <span>Share</span>
-              </Button>
-            </div>
           </div>
-          
-          <div className="max-w-5xl mx-auto">
-            <CounselingModeToggle 
+
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setLiveSermonOpen(true)}
+              className="gap-2"
+            >
+              <Radio className="h-4 w-4" />
+              <span className="hidden sm:inline">Live Sermon</span>
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="hidden sm:flex gap-2"
+            >
+              <Download className="h-4 w-4" />
+              <span className="hidden md:inline">Download</span>
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="hidden md:flex gap-2"
+            >
+              <Share2 className="h-4 w-4" />
+              <span>Share</span>
+            </Button>
+          </div>
+        </div>
+
+        {/* Counseling Mode Toggle */}
+        <div className="px-4 py-3 border-b border-border bg-card/50">
+          <div className="max-w-4xl mx-auto">
+            <CounselingModeToggle
               enabled={counselingMode}
               onToggle={setCounselingMode}
             />
@@ -236,7 +255,7 @@ export default function Chat() {
 
         {/* Messages Area */}
         <ScrollArea ref={scrollAreaRef} className="flex-1">
-          <div className="container mx-auto max-w-4xl py-6 px-4 space-y-6">
+          <div className="max-w-4xl mx-auto py-6 px-4 space-y-6">
             {messages.map((message, index) => (
               <div key={index} className="animate-fade-in">
                 <ChatMessage {...message} />
@@ -245,11 +264,11 @@ export default function Chat() {
           </div>
         </ScrollArea>
 
-        {/* Input Area with Recording */}
+        {/* Input Area */}
         <div className="border-t border-border bg-card sticky bottom-0">
-          <div className="container mx-auto max-w-4xl p-3 md:p-4">
+          <div className="max-w-4xl mx-auto p-4">
             <div className="flex gap-2 items-end">
-              <RecordButton 
+              <RecordButton
                 onRecordingComplete={handleRecordingComplete}
                 disabled={isAnalyzing}
               />
@@ -257,7 +276,9 @@ export default function Chat() {
                 <ChatInput
                   onSendMessage={handleSendMessage}
                   onFileUpload={handleFileUpload}
+                  onMicClick={() => setRecordingModalOpen(true)}
                   disabled={isAnalyzing}
+                  showMicButton={false}
                 />
               </div>
             </div>
@@ -265,11 +286,16 @@ export default function Chat() {
         </div>
       </div>
 
-      {/* Live Sermon Mode Modal */}
-      <LiveSermonMode 
+      {/* Modals */}
+      <LiveSermonMode
         open={liveSermonOpen}
         onClose={() => setLiveSermonOpen(false)}
       />
-    </Layout>
+      <RecordingModal
+        open={recordingModalOpen}
+        onClose={() => setRecordingModalOpen(false)}
+        onRecordingComplete={handleRecordingComplete}
+      />
+    </div>
   );
 }
