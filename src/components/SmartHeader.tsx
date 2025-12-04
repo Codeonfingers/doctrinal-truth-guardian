@@ -14,6 +14,7 @@ export function SmartHeader() {
 
   const navItems = [
     { label: "Home", path: "/" },
+    { label: "Dashboard", path: "/dashboard" },
     { label: "Features", path: "/#features" },
     { label: "How It Works", path: "/#how-it-works" },
     { label: "Pricing", path: "/pricing" },
