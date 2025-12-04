@@ -11,7 +11,7 @@ const Pricing = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
       <SmartHeader />
-      <main className="flex-1 container mx-auto max-w-screen-xl px-4 sm:px-6 py-12 md:py-20">
+      <main className="flex-1 container mx-auto max-w-screen-xl px-4 sm:px-6 pt-24 pb-12 md:pt-28 md:pb-20">
         <div className="text-center space-y-4 mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-foreground">Pricing Plans</h1>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">

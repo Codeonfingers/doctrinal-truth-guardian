@@ -34,7 +34,7 @@ const Contact = () => {
       <SmartHeader />
 
       {/* Hero Section */}
-      <section className="bg-gradient-hero text-white py-20 md:py-28">
+      <section className="bg-gradient-hero text-white pt-28 pb-20 md:pt-36 md:pb-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
             Contact Us
@@ -160,6 +160,8 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 };
